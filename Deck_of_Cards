@@ -1,0 +1,65 @@
+/**************************************************************
+ * Jordan Fuller
+ * Course: CIS 261
+ * Week 8 Lab 2: Deck of Cards
+ *************************************************************/
+
+using System;
+using System.Collections.Generic;
+
+namespace DeckofCards
+{
+    // Represents a single playing card
+    public class Card
+    {
+        public string Rank { get; set; }
+        public string Suit { get; set; }
+
+        public Card(string rank, string suit)
+        {
+            Rank = rank;
+            Suit = suit;
+        }
+
+        public override string ToString()
+        {
+            return $"{Rank} of {Suit}";
+        }
+    }
+
+    // Represents a deck of cards with shuffle, deal, and count functionality
+    public class Deck
+    {
+        private List<Card> deck;      // all cards
+        private int currentIndex;     // index of the next card to deal
+
+        public Deck()
+        {
+            deck = new List<Card>();
+            currentIndex = 0;
+            InitializeDeck();
+        }
+
+        // Builds a standard 52-card deck
+        private void InitializeDeck()
+        {
+            string[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
+            string[] ranks =
+            {
+                "Ace", "2", "3", "4", "5", "6", "7",
+                "8", "9", "10", "Jack", "Queen", "King"
+            };
+
+            foreach (string suit in suits)
+            {
+                foreach (string rank in ranks)
+                {
+                    deck.Add(new Card(rank, suit));
+                }
+            }
+        }
+
+        // Shuffle using Fisher–Yates algorithm
+        public void Shuffle()
+        {
+            Rand
