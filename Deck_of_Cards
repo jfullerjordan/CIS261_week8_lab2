@@ -1,65 +1,99 @@
-/**************************************************************
- * Jordan Fuller
- * Course: CIS 261
- * Week 8 Lab 2: Deck of Cards
- *************************************************************/
+# Jordan Fuller
+# Course: CIS 261
+# Lab: Deck of Cards
 
-using System;
-using System.Collections.Generic;
 
-namespace DeckofCards
-{
-    // Represents a single playing card
-    public class Card
-    {
-        public string Rank { get; set; }
-        public string Suit { get; set; }
+import random
 
-        public Card(string rank, string suit)
-        {
-            Rank = rank;
-            Suit = suit;
-        }
+# Card Class
+class Card:
+    def __init__(self, rank, suit):
+        self.rank = rank
+        self.suit = suit
 
-        public override string ToString()
-        {
-            return $"{Rank} of {Suit}";
-        }
-    }
+    def __str__(self):
+        return f"{self.rank} of {self.suit}"
 
-    // Represents a deck of cards with shuffle, deal, and count functionality
-    public class Deck
-    {
-        private List<Card> deck;      // all cards
-        private int currentIndex;     // index of the next card to deal
 
-        public Deck()
-        {
-            deck = new List<Card>();
-            currentIndex = 0;
-            InitializeDeck();
-        }
 
-        // Builds a standard 52-card deck
-        private void InitializeDeck()
-        {
-            string[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
-            string[] ranks =
-            {
-                "Ace", "2", "3", "4", "5", "6", "7",
-                "8", "9", "10", "Jack", "Queen", "King"
-            };
+# Deck Class
+class Deck:
+    def __init__(self):
+        self.cards = []
+        self.current_index = 0
+        self.build_deck()
 
-            foreach (string suit in suits)
-            {
-                foreach (string rank in ranks)
-                {
-                    deck.Add(new Card(rank, suit));
-                }
-            }
-        }
+    # Create a full 52-card deck
+    def build_deck(self):
+        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        ranks = ["Ace", "2", "3", "4", "5", "6", "7",
+                 "8", "9", "10", "Jack", "Queen", "King"]
 
-        // Shuffle using Fisher–Yates algorithm
-        public void Shuffle()
-        {
-            Rand
+        for suit in suits:
+            for rank in ranks:
+                self.cards.append(Card(rank, suit))
+
+    # Shuffle deck using random.shuffle
+    def shuffle(self):
+        random.shuffle(self.cards)
+        self.current_index = 0  # reset
+
+    # Deal N cards
+    def deal(self, num_cards):
+        remaining = self.cards_remaining()
+        num_to_deal = min(num_cards, remaining)
+
+        hand = self.cards[self.current_index:self.current_index + num_to_deal]
+        self.current_index += num_to_deal
+
+        return hand
+
+    # Count remaining cards
+    def cards_remaining(self):
+        return len(self.cards) - self.current_index
+
+
+]
+# Main Program
+
+def main():
+    print("===================================")
+    print("           Deck of Cards")
+    print("===================================\n")
+
+    deck = Deck()
+    deck.shuffle()
+
+    print("A new deck has been created and shuffled.")
+    print(f"Cards remaining: {deck.cards_remaining()}\n")
+
+    # Ask user how many cards to deal
+    while True:
+        try:
+            num = int(input("How many cards would you like to be dealt? (1–52): "))
+            if 1 <= num <= deck.cards_remaining():
+                break
+            else:
+                print("Please enter a valid number within range.\n")
+        except ValueError:
+            print("Invalid input — enter a whole number.\n")
+
+    print(f"\nDealing {num} card(s)...\n")
+
+    hand = deck.deal(num)
+
+    print("Your hand:")
+    print("-----------")
+    for card in hand:
+        print(card)
+
+    print("\n-----------")
+    print(f"Cards remaining in deck: {deck.cards_remaining()}\n")
+
+    input("Press ENTER to exit...")
+
+
+# Only run main if this file is executed
+if __name__ == "__main__":
+    main()
+
