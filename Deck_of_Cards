@@ -2,10 +2,11 @@
 # Course: CIS 261
 # Lab: Deck of Cards
 
-
 import random
 
+# ----------------------------------------
 # Card Class
+# ----------------------------------------
 class Card:
     def __init__(self, rank, suit):
         self.rank = rank
@@ -15,8 +16,9 @@ class Card:
         return f"{self.rank} of {self.suit}"
 
 
-
+# ----------------------------------------
 # Deck Class
+# ----------------------------------------
 class Deck:
     def __init__(self):
         self.cards = []
@@ -26,74 +28,9 @@ class Deck:
     # Create a full 52-card deck
     def build_deck(self):
         suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
-        ranks = ["Ace", "2", "3", "4", "5", "6", "7",
-                 "8", "9", "10", "Jack", "Queen", "King"]
+        ranks = [
+            "Ace", "2", "3", "4", "5", "6", "7",
+            "8", "9", "10", "Jack", "Queen", "King"
+        ]
 
-        for suit in suits:
-            for rank in ranks:
-                self.cards.append(Card(rank, suit))
-
-    # Shuffle deck using random.shuffle
-    def shuffle(self):
-        random.shuffle(self.cards)
-        self.current_index = 0  # reset
-
-    # Deal N cards
-    def deal(self, num_cards):
-        remaining = self.cards_remaining()
-        num_to_deal = min(num_cards, remaining)
-
-        hand = self.cards[self.current_index:self.current_index + num_to_deal]
-        self.current_index += num_to_deal
-
-        return hand
-
-    # Count remaining cards
-    def cards_remaining(self):
-        return len(self.cards) - self.current_index
-
-
-]
-# Main Program
-
-def main():
-    print("===================================")
-    print("           Deck of Cards")
-    print("===================================\n")
-
-    deck = Deck()
-    deck.shuffle()
-
-    print("A new deck has been created and shuffled.")
-    print(f"Cards remaining: {deck.cards_remaining()}\n")
-
-    # Ask user how many cards to deal
-    while True:
-        try:
-            num = int(input("How many cards would you like to be dealt? (1–52): "))
-            if 1 <= num <= deck.cards_remaining():
-                break
-            else:
-                print("Please enter a valid number within range.\n")
-        except ValueError:
-            print("Invalid input — enter a whole number.\n")
-
-    print(f"\nDealing {num} card(s)...\n")
-
-    hand = deck.deal(num)
-
-    print("Your hand:")
-    print("-----------")
-    for card in hand:
-        print(card)
-
-    print("\n-----------")
-    print(f"Cards remaining in deck: {deck.cards_remaining()}\n")
-
-    input("Press ENTER to exit...")
-
-
-# Only run main if this file is executed
-if __name__ == "__main__":
-    main()
-
+        for suit
