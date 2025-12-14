@@ -1,12 +1,14 @@
+# **************************************************************
+
 # Jordan Fuller
 # Course: CIS 261
 # Lab: Deck of Cards
+# **************************************************************
+
+
 
 import random
 
-# ----------------------------------------
-# Card Class
-# ----------------------------------------
 class Card:
     def __init__(self, rank, suit):
         self.rank = rank
@@ -16,21 +18,56 @@ class Card:
         return f"{self.rank} of {self.suit}"
 
 
-# ----------------------------------------
-# Deck Class
-# ----------------------------------------
 class Deck:
     def __init__(self):
         self.cards = []
-        self.current_index = 0
         self.build_deck()
 
-    # Create a full 52-card deck
     def build_deck(self):
-        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
         ranks = [
             "Ace", "2", "3", "4", "5", "6", "7",
             "8", "9", "10", "Jack", "Queen", "King"
         ]
 
-        for suit
+        for suit in suits:
+            for rank in ranks:
+                self.cards.append(Card(rank, suit))
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+
+    def deal(self, number):
+        hand = self.cards[:number]
+        del self.cards[:number]
+        return hand
+
+    def cards_left(self):
+        return len(self.cards)
+
+
+def main():
+    print("Card Dealer\n")
+    
+    deck = Deck()
+    deck.shuffle()
+
+    print("I have shuffled a deck of 52 cards.\n")
+
+    # Ask user for number of cards
+    num = int(input("How many cards would you like?: "))
+
+    print("\nHere are your cards:")
+    hand = deck.deal(num)
+
+    for card in hand:
+        print(card)
+
+    print(f"\nThere are {deck.cards_left()} cards left in the deck.\n")
+
+    print("Good luck!")
+    input("Press any key to continue . . . ")
+
+
+if __name__ == "__main__":
+    main()
